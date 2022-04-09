@@ -28,12 +28,7 @@ DeviceAddress sensorDeviceAddress;
 
 LiquidCrystal_I2C lcd(0x27,20,4);                      // set the LCD address to 0x3F for a 16 chars and 2 line display
 
-//Definicion de Variables:
-//double Setpoint, Input, Output, error;
-//double Kp=70, Ki=20, Kd=50;                        //Ganancias Ki y Kd sin el periodo.
-//PID myPID(&Input, &Output, &Setpoint, Kp, Ki, Kd, DIRECT);
-//int control;
-//float temp;
+ 
 int day_count=1;
 int h,m,s,D=1,M=1,A=20;
 int ok=0;
