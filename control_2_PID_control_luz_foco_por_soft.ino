@@ -1,9 +1,4 @@
-//funciona de manera correcta con esos valores de k
-//double Kp=70, Ki=20, Kd=50; 
-//
-//Programa para presentar el PID
-//
-//
+
 #include <TimerOne.h>
 #include <Wire.h>
 #include <PID_v1.h>
@@ -26,24 +21,15 @@ DeviceAddress sensorDeviceAddress;
 
 LiquidCrystal_I2C lcd(0x27,20,4);                      // set the LCD address to 0x3F for a 16 chars and 2 line display
 
-//Definicion de Variables:
-//double Setpoint, Input, Output, error;
-//double Kp=70, Ki=20, Kd=50;                        //Ganancias Ki y Kd sin el periodo.
-//PID myPID(&Input, &Output, &Setpoint, Kp, Ki, Kd, DIRECT);
-//int control;
-//float temp;
-int day_count=1;
-int h,m,s,D=1,M=1,A=20;
+
 int ok=0;
 unsigned long MillisAnterior = 0;
 unsigned long previousMillis = 0;
 const int tiempoAntirrebote = 50;
 //////////////////////////////////////
-//////////////////////////////////////
 // Parametros para analisis a lazo cerrado
 float Setpoint = 0;       // Celsius
 // Constantes de PID
-float Kc = 8; float Tao_I = 80;
 int Tiempo0 = 0;     // Retardo (en milisegundos) para ejecutar cambio escalon cuando se encuentra 
                          //a lazo abierto o cambio en el septpoint a lazo cerrado 
 //int A = 0;           // Pin A0 de entrada analogica para sensor LM35 (Variable de salida)
@@ -73,9 +59,7 @@ float Kp=17.79;  //nuevos datos un polo rapido y robusto
 float Ki=0.12562;
 float Kd=32.3349;
 //////////////////////////////////////
-//////////////////////////////////////
-//////////////////////////////////////
-//////////////////////////////////////
+
 //Interrupcion para deteccion de cruce por cero
 void zero_cross_detect() {  
   digitalWrite(AC_PIN, LOW);                      // Apaga el TRIAC
@@ -105,30 +89,30 @@ void setup() {
   Serial.println("CLEARDATA"); //limpia los datos previos 
     
 while(ok<2){
-   while(ok==0){
+   while(ok==0){  //configuracion del setpoint a traves de unas teclas
       lcd.setCursor(0,0);
       lcd.print("Ingrese setpoint:");
       lcd.print("                 ");
-   if(!antirrebote(B_UP)){
+   if(!antirrebote(B_UP)){    //configura 45°
         Setpoint =45; 
         delay(1000);
         ok++;}
-   if(!antirrebote(B_NEXT)){
+   if(!antirrebote(B_NEXT)){   //configura 35°
         Setpoint =35; 
         delay(1000);
         ok++;}
-   if(!antirrebote(B_DOWN)){
+   if(!antirrebote(B_DOWN)){    //configura 30°
         Setpoint =30; 
         delay(1000);
         ok++;}
-   if(!antirrebote(B_BACK)){
+   if(!antirrebote(B_BACK)){    //configura 40°
         Setpoint =40; 
         delay(1000);
         ok++;}  
 }
 while(ok==1){
       lcd.setCursor(0,0);
-      lcd.print("Ingrese tipo:     ");
+      lcd.print("Ingrese tipo:     ");   // se elige el tipo de controlador
      if(!antirrebote(B_UP)){
         modo=3; 
         delay(1000);
@@ -198,9 +182,9 @@ if(Tiempo_actual - Tiempo_previo >= Read_Delay){
 
 if (Tiempo_actual >= Tiempo0){
       PID_error = Setpoint - temp;                   //Calculo del error    
-      Error_INT = Error_INT + PID_error*1;      //Calculo de la integral del error
+      Error_INT = Error_INT + PID_error*1;      //Calculo de la integral del error (1 es tiempo de muestreo de la planta)
       Error_D = ((PID_error - previous_error)/1) ;
-      PID_value = Kp * PID_error +  Ki * Error_INT + Kp * Error_D ;       //PID_value = Kc*(PID_error + (1/Tao_I)*Error_INT);     //Calculo de la salida del controlador PI
+      PID_value = Kp * PID_error +  Ki * Error_INT + Kp * Error_D ;       //PID     //Calculo de la salida del controlador
       sp = Setpoint;  }
     // Limite de salida del controlador
     if(PID_value < 0)
@@ -237,11 +221,7 @@ if (Tiempo_actual >= Tiempo0){
         Serial.print(temp);
         Serial.print("  Control: ");
         Serial.println(control);
-  //lcd.setCursor(0,0);
-  //lcd.setCursor(0,0);
-  //lcd.print("           ");
-  //lcd.setCursor(13,0);
-  //lcd.print(modo); 
+ 
   lcd.setCursor(3,0);
   lcd.print("Control");
   lcd.setCursor(1,2);
@@ -250,19 +230,6 @@ if (Tiempo_actual >= Tiempo0){
   lcd.setCursor(1,3);
   lcd.print("SetPoint:");
   lcd.print(sp);
-  
-  //if(modo==1){
-  //lcd.setCursor(12,0);
-  //lcd.print("P.");
-  //} 
-  //if(modo==2){
-  //lcd.setCursor(12,0);
-  //lcd.print("PI.");
-  //} 
-  //if(modo==3){
-  //lcd.setCursor(12,0);
-  //lcd.print("PID");
-  //} 
 //////////////////////////////////////      
 }//loop
 
@@ -295,7 +262,7 @@ void lcd_time(){
   lcd.print(second(), DEC); 
 }
 
-bool antirrebote(int pin){
+bool antirrebote(int pin){  //funcion para los botones
   int tiempo = 0;
   bool estado;
   bool estadoAnterior;
