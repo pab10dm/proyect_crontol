@@ -1,3 +1,4 @@
+//puede que algunas variables esten de mas, esto es porque el programa se fue modificando, llevando de P luego PI y finalmente PID
 
 #include <TimerOne.h>
 #include <Wire.h>
