@@ -2,7 +2,6 @@
 
  
 //Programa para presentar el PID
- 
 #include <TimerOne.h>
 #include <Wire.h>
 #include <PID_v1.h>
@@ -42,12 +41,14 @@ int Tiempo0 = 0;     // Retardo (en milisegundos) para ejecutar cambio escalon c
                          //a lazo abierto o cambio en el septpoint a lazo cerrado 
 //int A = 0;           // Pin A0 de entrada analogica para sensor LM35 (Variable de salida)
 float Potencia = 50;  // Potencia inicial enviada al dimmer en rango de 0 a 100 (Variable de entrada)
+
 //  Declaracion de variables
 unsigned long Tiempo_previo = 0; 
 unsigned long Tiempo_actual = 0;
 double Read_Delay = 1000;     // Periodo de muestreo en milisegundos
 int Temperatura = 0;       // Celsius
-double sp = 0;   
+double sp = 0;  
+
 // Variables para PID
 double error = 0;
 double PID_error = 0;
@@ -66,19 +67,19 @@ int modo;
 float Kp=17.79;  //nuevos datos un polo rapido y robusto  
 float Ki=0.12562;
 float Kd=32.3349;
-//////////////////////////////////////
-//////////////////////////////////////
-//////////////////////////////////////
-//////////////////////////////////////
+
 
 //Interrupcion para deteccion de cruce por cero
-void zero_cross_detect() {  
+  void zero_cross_detect() 
+  {  
   digitalWrite(AC_PIN, LOW);                      // Apaga el TRIAC
   Timer1.initialize(control);                // Inicializa Timer1 cargando la variable de control
   Timer1.attachInterrupt(disparo);      
 } 
+
 //Interrupcion Timer1     
-void disparo() {                                        
+void disparo() 
+{                                        
       digitalWrite(AC_PIN, HIGH);                 //Cuando desborda el Timer1, produce el disparo
       Timer1.stop();                           
 }
@@ -249,21 +250,27 @@ if (Tiempo_actual >= Tiempo0){
  
  
 void serial_monitor_time() {
-  Serial.print(hour());
+
+Serial.print(hour());
   printDigits(minute());
   printDigits(second());
   Serial.println();
+
 }
 
 void printDigits(int digits) {
-  Serial.print(":");
+
+Serial.print(":");
   if (digits < 10)
     Serial.print('0');
   Serial.print(digits);
+
 }
 
+
 void lcd_time(){
-  lcd.setCursor(1, 1);
+ 
+ lcd.setCursor(1, 1);
   lcd.print("    ");
   if(hour() < 10) lcd.print('0');
   lcd.print(hour(), DEC);
@@ -273,9 +280,11 @@ void lcd_time(){
   lcd.print(':');
   if(second() < 10) lcd.print('0');
   lcd.print(second(), DEC); 
+
 }
 
 bool antirrebote(int pin){
+
   int tiempo = 0;
   bool estado;
   bool estadoAnterior;
@@ -289,4 +298,5 @@ bool antirrebote(int pin){
     delay(1);
   }while(tiempo < tiempoAntirrebote);
   return estado;
+
 } 
