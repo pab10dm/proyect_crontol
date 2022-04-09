@@ -1,4 +1,4 @@
-# proyect_crontol
+# project_crontol
 
 //funciona de manera correcta con esos valores de k
 //double Kp=70, Ki=20, Kd=50; 
