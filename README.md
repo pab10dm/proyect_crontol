@@ -1,11 +1,8 @@
 # project_crontol
 
-//funciona de manera correcta con esos valores de k
-//double Kp=70, Ki=20, Kd=50; 
-//
+ 
 //Programa para presentar el PID
-//
-//
+ 
 #include <TimerOne.h>
 #include <Wire.h>
 #include <PID_v1.h>
@@ -73,6 +70,7 @@ float Kd=32.3349;
 //////////////////////////////////////
 //////////////////////////////////////
 //////////////////////////////////////
+
 //Interrupcion para deteccion de cruce por cero
 void zero_cross_detect() {  
   digitalWrite(AC_PIN, LOW);                      // Apaga el TRIAC
@@ -197,8 +195,9 @@ if (Tiempo_actual >= Tiempo0){
       PID_error = Setpoint - temp;                   //Calculo del error    
       Error_INT = Error_INT + PID_error*1;      //Calculo de la integral del error
       Error_D = ((PID_error - previous_error)/1) ;
-      PID_value = Kp * PID_error +  Ki * Error_INT + Kp * Error_D ;       //PID_value = Kc*(PID_error + (1/Tao_I)*Error_INT);     //Calculo de la salida del controlador PI
+      PID_value = Kp * PID_error +  Ki * Error_INT + Kp * Error_D ; //PID_value = Kc*(PID_error + (1/Tao_I)*Error_INT); //Calculo de la salida del controlador PI
       sp = Setpoint;  }
+      
     // Limite de salida del controlador
     if(PID_value < 0)
     {      PID_value = 0;       }
@@ -206,8 +205,8 @@ if (Tiempo_actual >= Tiempo0){
     {      PID_value = 100;    }
     Potencia = PID_value;   //Asignacion a la entrada de la planta.
     previous_error=PID_error;
-    
     }
+    
 //////////////////////////////////////////////////////
 //////////////////////////////////////////////////////
         Serial.print("Potencia:");
@@ -234,11 +233,7 @@ if (Tiempo_actual >= Tiempo0){
         Serial.print(temp);
         Serial.print("  Control: ");
         Serial.println(control);
-  //lcd.setCursor(0,0);
-  //lcd.setCursor(0,0);
-  //lcd.print("           ");
-  //lcd.setCursor(13,0);
-  //lcd.print(modo); 
+ 
   lcd.setCursor(3,0);
   lcd.print("Control");
   lcd.setCursor(1,2);
@@ -248,18 +243,6 @@ if (Tiempo_actual >= Tiempo0){
   lcd.print("SetPoint:");
   lcd.print(sp);
   
-  //if(modo==1){
-  //lcd.setCursor(12,0);
-  //lcd.print("P.");
-  //} 
-  //if(modo==2){
-  //lcd.setCursor(12,0);
-  //lcd.print("PI.");
-  //} 
-  //if(modo==3){
-  //lcd.setCursor(12,0);
-  //lcd.print("PID");
-  //} 
 //////////////////////////////////////      
 }//loop
 
