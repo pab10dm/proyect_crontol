@@ -77,13 +77,13 @@ float Kd=32.3349;
 //Interrupcion para deteccion de cruce por cero
 void zero_cross_detect() {  
   digitalWrite(AC_PIN, LOW);                      // Apaga el TRIAC
-  Timer1.initialize(control);                // Inicializa Timer1 cargando la variable de control
-  Timer1.attachInterrupt(disparo);      
+  Timer1.initialize(control);                     // Inicializa Timer1 cargando la variable de control
+  Timer1.attachInterrupt(disparo);                
 } 
 //Interrupcion Timer1     
 void disparo() {                                        
       digitalWrite(AC_PIN, HIGH);                 //Cuando desborda el Timer1, produce el disparo
-      Timer1.stop();                           
+      Timer1.stop();                              
 }
 
 void setup() {
@@ -188,7 +188,7 @@ void loop() {
 
 Tiempo_actual = millis(); // Tiempo Actual  
       
-control = map(Potencia,0,100,9500,1000);//valor = map(Potencia,0,100,7600,10);    //9500,1000
+control = map(Potencia,0,100,9500,1000);//valor = map(Potencia,0,100,7600,10);    //para definir el tiempo de apagado
  
 if(Tiempo_actual - Tiempo_previo >= Read_Delay){
        Tiempo_previo += Read_Delay;                
