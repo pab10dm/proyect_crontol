@@ -1,8 +1,10 @@
 //Control PID 
 //control de temperatura a traves de una lampara
 //El codigo (de arduino) se penso para poder elegir distintas temperaturas y tres tipos de control (PID, PI y P)
+//Este control PID diseñado a través de un microprocesador arduino, este detecta el cruce por cero de una onda sinusoidal 
+//y regula la potencia que tendrá una lámpara, que será la encargada de darle calor al sistema.
 //puede que algunas variables esten de mas, esto es porque el programa se fue modificando, llevando de P luego PI y finalmente PID
-//Se utliza un display LCD para visualizar el tiempo transcurrido, el tipo de controlador seleccionado la temperatura y el setpoint 
+//Se utliza un display LCD para visualizar el tiempo transcurrido, el tipo de controlador seleccionado, la temperatura y el setpoint 
 //Descripcion del codigo
 //En la parte de setup se configura: 
 //primero el setpoint luego el tipo de control a traves de los botones ubicados en la parte inferior
@@ -11,7 +13,7 @@
 //se toma la variable control para definir el tienpo que estara desactivado y el foco
 //La funcion "zero_cross_detect()" y  "disparo()", en la primera se detecta el cruce por cero y con la otra activamos el disparo  
 //y en la parte pid_value le damos un limite a la potencia (esto es para que el valor no nos de negativo y no se pase de 100)
-// las demas funciones algunas para visualizar en el LCD, otra para que funcionen bien los botones
+// las demas funciones algunas para visualizar en el LCD, otra para que funcionen bien los botones y otra para el tiempo transcurrido.
 
 #include <TimerOne.h>
 #include <Wire.h>
