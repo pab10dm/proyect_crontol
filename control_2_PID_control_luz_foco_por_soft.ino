@@ -200,7 +200,7 @@ if (Tiempo_actual >= Tiempo0){
       PID_error = Setpoint - temp;                                         //Calculo del error    
       Error_INT = Error_INT + PID_error*1;                                 //Calculo de la integral del error (1 es tiempo de muestreo de la planta)
       Error_D = ((PID_error - previous_error)/1) ;
-      PID_value = Kp * PID_error +  Ki * Error_INT + Kp * Error_D ;       //PID     //Calculo de la salida del controlador
+      PID_value = Kp * PID_error +  Ki * Error_INT + Kd * Error_D ;       //PID     //Calculo de la salida del controlador
       sp = Setpoint;  }
     // Limite de salida del controlador
     if(PID_value < 0)
